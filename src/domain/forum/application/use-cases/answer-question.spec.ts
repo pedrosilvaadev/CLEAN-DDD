@@ -1,5 +1,5 @@
-import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository.js'
-import { AnswerQuestionUseCase } from './answer-question.js'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'
+import { AnswerQuestionUseCase } from './answer-question'
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: AnswerQuestionUseCase
@@ -9,7 +9,8 @@ describe('Answer question', () => {
     inMemoryAnswersRepository = new InMemoryAnswersRepository()
     sut = new AnswerQuestionUseCase(inMemoryAnswersRepository)
   })
-  test('should be able to create an answer', async () => {
+
+  it('should be able to create an answer', async () => {
     const { answer } = await sut.execute({
       questionId: '1',
       instructorId: '1',
