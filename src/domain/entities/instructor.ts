@@ -11,5 +11,4 @@ export class Instructor extends Entity<InstructorProps> {
 
     return instructor
   }
-
 }
