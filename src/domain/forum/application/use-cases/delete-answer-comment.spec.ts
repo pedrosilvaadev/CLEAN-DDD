@@ -42,4 +42,3 @@ describe('Delete answer comment on answer', () => {
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })
-

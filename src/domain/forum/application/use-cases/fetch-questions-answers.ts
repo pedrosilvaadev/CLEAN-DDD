@@ -10,13 +10,16 @@ interface FetchQuestionsAnswersUseCaseRequest {
 type FetchQuestionsAnswersUseCaseResponse = Either<null, { answers: Answer[] }>
 
 export class FetchQuestionsAnswersUseCase {
-  constructor(private answerRepository: AnswerRepository) { }
+  constructor(private answerRepository: AnswerRepository) {}
 
   async execute({
     page,
-    questionId
+    questionId,
   }: FetchQuestionsAnswersUseCaseRequest): Promise<FetchQuestionsAnswersUseCaseResponse> {
-    const answers = await this.answerRepository.findManyByQuestionId(questionId, { page })
+    const answers = await this.answerRepository.findManyByQuestionId(
+      questionId,
+      { page },
+    )
 
     return right({ answers })
   }

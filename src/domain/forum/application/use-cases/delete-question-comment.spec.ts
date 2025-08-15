@@ -10,7 +10,8 @@ let sut: DeleteQuestionCommentUseCase
 
 describe('Delete question comment on question', () => {
   beforeEach(() => {
-    inMemoryQuestionsCommentsRepository = new InMemoryQuestionsCommentsRepository()
+    inMemoryQuestionsCommentsRepository =
+      new InMemoryQuestionsCommentsRepository()
     sut = new DeleteQuestionCommentUseCase(inMemoryQuestionsCommentsRepository)
   })
 
@@ -43,4 +44,3 @@ describe('Delete question comment on question', () => {
     expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })
-

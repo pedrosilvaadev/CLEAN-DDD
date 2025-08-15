@@ -8,16 +8,17 @@ interface DeleteQuestionUseCaseRequest {
   authorId: string
 }
 
-
-type DeleteQuestionUseCaseResponse = Either<NotAllowedError | ResourceNotFoundError, {}>
-
+type DeleteQuestionUseCaseResponse = Either<
+  NotAllowedError | ResourceNotFoundError,
+  {}
+>
 
 export class DeleteQuestionUseCase {
-  constructor(private questionRepository: QuestionsRepository) { }
+  constructor(private questionRepository: QuestionsRepository) {}
 
   async execute({
     questionId,
-    authorId
+    authorId,
   }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
     const question = await this.questionRepository.findById(questionId)
 

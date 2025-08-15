@@ -7,16 +7,20 @@ interface FetchAnswerCommentsUseCaseRequest {
   page: number
 }
 
-type FetchAnswerCommentsUseCaseResponse = Either<null, { answerComments: AnswerComment[] }>
+type FetchAnswerCommentsUseCaseResponse = Either<
+  null,
+  { answerComments: AnswerComment[] }
+>
 
 export class FetchAnswerCommentsUseCase {
-  constructor(private answerCommentsRepository: AnswerCommentsRepository) { }
+  constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
 
   async execute({
     page,
-    answerId
+    answerId,
   }: FetchAnswerCommentsUseCaseRequest): Promise<FetchAnswerCommentsUseCaseResponse> {
-    const answerComments = await this.answerCommentsRepository.findManyByAnswerId(answerId, { page })
+    const answerComments =
+      await this.answerCommentsRepository.findManyByAnswerId(answerId, { page })
 
     return right({ answerComments })
   }

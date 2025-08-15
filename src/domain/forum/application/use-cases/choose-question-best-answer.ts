@@ -10,19 +10,20 @@ interface ChooseQuestionBestAnswerUseCaseRequest {
   authorId: string
 }
 
-
-type ChooseQuestionBestAnswerUseCaseResponse = Either<ResourceNotFoundError | NotAllowedError, { question: Question }>
-
+type ChooseQuestionBestAnswerUseCaseResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  { question: Question }
+>
 
 export class ChooseQuestionBestAnswerUseCase {
   constructor(
     private questionRepository: QuestionsRepository,
-    private answerRepository: AnswerRepository
-  ) { }
+    private answerRepository: AnswerRepository,
+  ) {}
 
   async execute({
     answerId,
-    authorId
+    authorId,
   }: ChooseQuestionBestAnswerUseCaseRequest): Promise<ChooseQuestionBestAnswerUseCaseResponse> {
     const answer = await this.answerRepository.findById(answerId)
 
@@ -30,7 +31,9 @@ export class ChooseQuestionBestAnswerUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const question = await this.questionRepository.findById(answer.questionId.toString())
+    const question = await this.questionRepository.findById(
+      answer.questionId.toString(),
+    )
 
     if (!question) {
       return left(new ResourceNotFoundError())

@@ -11,12 +11,16 @@ interface CommentOnQuestionUseCaseRequest {
   content: string
 }
 
-type CommentOnQuestionUseCaseResponse = Either<ResourceNotFoundError, { questionComment: QuestionComment }>
+type CommentOnQuestionUseCaseResponse = Either<
+  ResourceNotFoundError,
+  { questionComment: QuestionComment }
+>
 
 export class CommentOnQuestionUseCase {
-  constructor(private questionRepository: QuestionsRepository,
-    private questionCommentsRepository: QuestionsCommentsRepository
-  ) { }
+  constructor(
+    private questionRepository: QuestionsRepository,
+    private questionCommentsRepository: QuestionsCommentsRepository,
+  ) {}
 
   async execute({
     authorId,

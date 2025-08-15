@@ -1,44 +1,44 @@
-import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questions-repository";
-import { makeQuestion } from "test/factories/make-question";
-import { CommentOnQuestionUseCase } from "./comment-on-question";
-import { expect } from "vitest";
-import { InMemoryQuestionsCommentsRepository } from "test/repositories/in-memory-questions-comments-repository";
-import { InMemoryQuestionAttachmentsRepository } from "test/repositories/in-memory-question-attachments-repository";
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+import { makeQuestion } from 'test/factories/make-question'
+import { CommentOnQuestionUseCase } from './comment-on-question'
+import { expect } from 'vitest'
+import { InMemoryQuestionsCommentsRepository } from 'test/repositories/in-memory-questions-comments-repository'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
-let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository;
-let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
-let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
+let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 
-let sut: CommentOnQuestionUseCase;
+let sut: CommentOnQuestionUseCase
 
-describe("Comment on question", () => {
+describe('Comment on question', () => {
   beforeEach(() => {
     inMemoryQuestionsCommentsRepository =
-      new InMemoryQuestionsCommentsRepository();
+      new InMemoryQuestionsCommentsRepository()
     inMemoryQuestionAttachmentsRepository =
-      new InMemoryQuestionAttachmentsRepository();
+      new InMemoryQuestionAttachmentsRepository()
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
-      inMemoryQuestionAttachmentsRepository
-    );
+      inMemoryQuestionAttachmentsRepository,
+    )
     sut = new CommentOnQuestionUseCase(
       inMemoryQuestionsRepository,
-      inMemoryQuestionsCommentsRepository
-    );
-  });
+      inMemoryQuestionsCommentsRepository,
+    )
+  })
 
-  it("should be able to comment on question", async () => {
-    const question = makeQuestion();
+  it('should be able to comment on question', async () => {
+    const question = makeQuestion()
 
-    await inMemoryQuestionsRepository.create(question);
+    await inMemoryQuestionsRepository.create(question)
 
     await sut.execute({
       questionId: question.id.toString(),
       authorId: question.authorId.toString(),
-      content: "Comment content",
-    });
+      content: 'Comment content',
+    })
 
     expect(inMemoryQuestionsCommentsRepository.items[0].content).toEqual(
-      "Comment content"
-    );
-  });
-});
+      'Comment content',
+    )
+  })
+})

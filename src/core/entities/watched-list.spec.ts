@@ -1,4 +1,4 @@
-import { WatchedList } from "./watched-list";
+import { WatchedList } from './watched-list'
 
 class NumberWatchedList extends WatchedList<number> {
   compareItems(a: number, b: number): boolean {
@@ -38,7 +38,6 @@ describe('Watched list', () => {
     expect(list.getRemovedItems()).toEqual([])
     expect(list.getNewItems()).toEqual([])
   })
-
 
   it('should be able to remove an item even if it was removed before', () => {
     const list = new NumberWatchedList([1, 2, 3])

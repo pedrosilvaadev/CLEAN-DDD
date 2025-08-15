@@ -7,10 +7,13 @@ interface GetQuestionBySlugUseCaseRequest {
   slug: string
 }
 
-type GetQuestionBySlugUseCaseResponse = Either<ResourceNotFoundError, { question: Question }>
+type GetQuestionBySlugUseCaseResponse = Either<
+  ResourceNotFoundError,
+  { question: Question }
+>
 
 export class GetQuestionBySlugUseCase {
-  constructor(private questionRepository: QuestionsRepository) { }
+  constructor(private questionRepository: QuestionsRepository) {}
 
   async execute({
     slug,
