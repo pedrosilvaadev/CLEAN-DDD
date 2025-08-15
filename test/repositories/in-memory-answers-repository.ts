@@ -1,45 +1,56 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
+import { AnswerAttachmentsRepository } from "@/domain/forum/application/repositories/answer-attachments-repository";
 import { AnswerRepository } from "@/domain/forum/application/repositories/answer-repository";
 import { Answer } from "@/domain/forum/enterprise/entities/answer";
 
 export class InMemoryAnswersRepository implements AnswerRepository {
+  constructor(
+    private answerAttachmentsRepository: AnswerAttachmentsRepository
+  ) {}
 
-  public items: Answer[] = []
+  public items: Answer[] = [];
 
   async findById(id: string): Promise<Answer | null> {
-    const answer = this.items.find((item) => item.id.toString() === id)
+    const answer = this.items.find((item) => item.id.toString() === id);
 
     if (!answer) {
-      return null
+      return null;
     }
 
-    return answer
+    return answer;
   }
 
-  async findManyByQuestionId(questionId: string, { page }: PaginationParams): Promise<Answer[]> {
+  async findManyByQuestionId(
+    questionId: string,
+    { page }: PaginationParams
+  ): Promise<Answer[]> {
     const answers = this.items
       .filter((item) => item.questionId.toString() === questionId)
-      .slice((page - 1) * 20, page * 20)
+      .slice((page - 1) * 20, page * 20);
 
-    return answers
+    return answers;
   }
 
   async create(answer: Answer): Promise<void> {
-    this.items.push(answer)
+    this.items.push(answer);
   }
 
   async delete(answer: Answer): Promise<void> {
-    const itemIndex = this.items.findIndex((item) => item.id.toString() === answer.id.toString())
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === answer.id.toString()
+    );
 
-    this.items.splice(itemIndex, 1)
+    this.items.splice(itemIndex, 1);
+
+    this.answerAttachmentsRepository.deleteManyByAnswerId(answer.id.toString());
   }
 
   async save(answer: Answer): Promise<void> {
-    const index = this.items.findIndex(item => item.id === answer.id)
+    const index = this.items.findIndex((item) => item.id === answer.id);
     if (index >= 0) {
-      this.items[index] = answer
+      this.items[index] = answer;
     } else {
-      this.items.push(answer)
+      this.items.push(answer);
     }
   }
 }
